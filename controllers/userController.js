@@ -1,5 +1,6 @@
 import UserModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
+import VerifyTokenModel from "../models/verifyTokenModel.js";
 import "dotenv/config";
 import mongoose from "mongoose";
 import { apiHelper } from "../utils/apiHelper.js";
@@ -35,9 +36,33 @@ const signup = async (req, res) => {
 		email: email,
 		password: password,
 	});
-
+	const OTP = utils.generateOTP();
+	const token = new VerifyTokenModel({
+		owner: user._id,
+		token: OTP,
+	});
 	try {
 		await user.save();
+		await token.save();
+		await mailer.mailTransport().sendMail(
+			{
+				from: "hoangtiendat.work@gmail.com",
+				to: user.email,
+				subject: "Verify your account",
+				html: mailer.generateEmailTemplate(
+					user.fullName,
+					OTP,
+					"Sign up"
+				),
+			},
+			function (error, info) {
+				if (error) {
+					console.log(error);
+				} else {
+					console.log("Email sent, " + info.response);
+				}
+			}
+		);
 		return apiHelper.sendSuccessResponse(
 			res,
 			"Signup successfully",
@@ -72,6 +97,60 @@ const login = async (req, res) => {
 	return apiHelper.sendSuccessResponse(res, "Login successfully!", {
 		user: existingUser,
 		token: token,
+	});
+};
+
+const verifyEmail = async (req, res) => {
+	const { userId, otp } = req.body;
+	if (!userId || !otp.trim()) {
+		return apiHelper.sendError(res, "Invalid request, missing parameters!");
+	}
+	if (!mongoose.Types.ObjectId.isValid(userId)) {
+		return apiHelper.sendError(res, "Invalid user id");
+	}
+	const user = await UserModel.findById(userId);
+	if (!user) {
+		return apiHelper.sendError(res, "Sorry, user not found!");
+	}
+	if (user.verified) {
+		return apiHelper.sendError(res, "This account is already verified!");
+	}
+	const token = await VerifyTokenModel.findOne({ owner: user._id });
+	console.log(token);
+	if (!token) {
+		return apiHelper.sendError(res, "Sorry, user not found!");
+	}
+	const isMatched = await token.compareToken(otp);
+	if (!isMatched) {
+		return apiHelper.sendError(res, "Please provide a valid token!");
+	}
+	user.verified = true;
+	await VerifyTokenModel.findByIdAndDelete(token._id);
+	await user.save();
+	const jwtToken = jwt.sign({ id: user._id }, JWT_SECRET_KEY, {
+		expiresIn: "24hr",
+	});
+	await mailer.mailTransport().sendMail(
+		{
+			from: "hoangtiendat.work@gmail.com",
+			to: user.email,
+			subject: "Verify your account",
+			html: mailer.plainEmailTemplate(
+				"Email verified successfully",
+				"Thanks for connecting with us"
+			),
+		},
+		function (error, info) {
+			if (error) {
+				console.log(error);
+			} else {
+				console.log("Email sent, " + info.response);
+			}
+		}
+	);
+	return apiHelper.sendSuccessResponse(res, "Successfully verified!", {
+		user,
+		token: jwtToken,
 	});
 };
 
@@ -124,7 +203,7 @@ const forgotPassword = async (req, res) => {
 
 const verifyOTPResetPass = async (req, res) => {
 	const { email, otp } = req.body;
-	if (!email || !3) {
+	if (!email || !otp) {
 		return apiHelper.sendError(res, "Please provide a valid email/otp!");
 	}
 	const user = await UserModel.findOne({ email: email }).select("-password");
@@ -190,6 +269,15 @@ const resetPassword = async (req, res) => {
 		token: jwtToken,
 	});
 };
+const deleteUser = async (req, res) => {
+	try {
+		const user = await UserModel.findByIdAndDelete(req.params.id);
+
+		res.status(200).json("delete");
+	} catch (error) {
+		res.status(500).json(error);
+	}
+};
 
 export {
 	signup,
@@ -198,4 +286,6 @@ export {
 	verifyOTPResetPass,
 	resetPassword,
 	getUser,
+	deleteUser,
+	verifyEmail,
 };
