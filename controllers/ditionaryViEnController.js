@@ -13,7 +13,20 @@ const getListDictionaryViEn = async (_req, res) => {
 
 const getListWordViEn = async (req, res) => {
 	const word = await DictionariViEModel.find({
-		word: { $regex: req.params.word },
+		word: { $regex: `@${req.params.word}` },
+	}).limit(20);
+
+	if (!word) {
+		return apiHelper.sendError(res, "No Data", 404);
+	}
+	return apiHelper.sendSuccessResponse(res, "Successfully", {
+		word,
+	});
+};
+
+const getWordViEnDetails = async (req, res) => {
+	const word = await DictionariViEModel.find({
+		word: req.params.word,
 	});
 
 	if (!word) {
@@ -23,4 +36,4 @@ const getListWordViEn = async (req, res) => {
 		word,
 	});
 };
-export { getListDictionaryViEn, getListWordViEn };
+export { getListDictionaryViEn, getListWordViEn, getWordViEnDetails };
