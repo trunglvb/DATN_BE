@@ -12,6 +12,7 @@ import vocabRoute from "./routes/vocabRoute.js";
 import dictionaryViEnRoute from "./routes/dictionaryViEnRoute.js";
 
 // import { saveToDatabase } from "./utils/crawler.js";
+import { translate } from "@vitalets/google-translate-api";
 
 const app = express();
 
