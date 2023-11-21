@@ -10,6 +10,8 @@ import progressRoute from "./routes/progressRoute.js";
 import userRoute from "./routes/userRoute.js";
 import vocabRoute from "./routes/vocabRoute.js";
 import dictionaryViEnRoute from "./routes/dictionaryViEnRoute.js";
+import blogRouter from "./routes/blogRoute.js";
+import sentenceRouter from "./routes/sentenceRoute.js";
 
 // import { saveToDatabase } from "./utils/crawler.js";
 import { translate } from "@vitalets/google-translate-api";
@@ -32,6 +34,8 @@ app.use("/api", podcastRoute);
 app.use("/api", bookRoute);
 app.use("/api", progressRoute);
 app.use("/api", dictionaryViEnRoute);
+app.use("/api", blogRouter);
+app.use("/api", sentenceRouter);
 
 await connectDb();
 // await saveToDatabase();
