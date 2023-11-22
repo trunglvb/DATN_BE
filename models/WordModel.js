@@ -46,6 +46,7 @@ const wordSchema = new Schema({
 		trim: true,
 		default: null,
 	},
+	//chuyen nganh
 	specialty: {
 		type: String,
 		enum: Array.from({ length: NUM_OF_SPECIALTY }, (_, key) =>
@@ -53,6 +54,7 @@ const wordSchema = new Schema({
 		),
 		default: "0",
 	},
+	//chu de
 	topics: [
 		{
 			type: String,

@@ -12,6 +12,8 @@ import vocabRoute from "./routes/vocabRoute.js";
 import dictionaryViEnRoute from "./routes/dictionaryViEnRoute.js";
 import blogRouter from "./routes/blogRoute.js";
 import sentenceRouter from "./routes/sentenceRoute.js";
+import wordRouter from "./routes/wordRoute.js";
+import gameRouter from "./routes/gameRoute.js";
 
 // import { saveToDatabase } from "./utils/crawler.js";
 import { translate } from "@vitalets/google-translate-api";
@@ -36,6 +38,8 @@ app.use("/api", progressRoute);
 app.use("/api", dictionaryViEnRoute);
 app.use("/api", blogRouter);
 app.use("/api", sentenceRouter);
+app.use("/api", wordRouter);
+app.use("/api", gameRouter);
 
 await connectDb();
 // await saveToDatabase();
