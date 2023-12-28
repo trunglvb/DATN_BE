@@ -24,6 +24,19 @@ const Vocab_Urls = [
 	"https://tienganhtflat.com/blog/toeic-words-investment",
 	"https://tienganhtflat.com/blog/toeic-words-apply-and-interviewing",
 ];
+
+const Vocab_Urls_IELTS = [
+	"https://tienganhtflat.com/blog/tu-vung-ielts-phan-1",
+	"https://tienganhtflat.com/blog/tu-vung-ielts-phan-2",
+	"https://tienganhtflat.com/blog/tu-vung-ielts-phan-3",
+	"https://tienganhtflat.com/blog/tu-vung-ielts-phan-4",
+	"https://tienganhtflat.com/blog/tu-vung-ielts-phan-5",
+	"https://tienganhtflat.com/blog/tu-vung-ielts-phan-6",
+	"https://tienganhtflat.com/blog/tu-vung-ielts-phan-7",
+	"https://tienganhtflat.com/blog/tu-vung-ielts-phan-8",
+	"https://tienganhtflat.com/blog/tu-vung-ielts-phan-9",
+	"https://tienganhtflat.com/blog/tu-vung-ielts-phan-10",
+];
 export async function getVocabularyLists(url) {
 	const htmlText = await getHtmlFromUrl(url);
 	const $ = cheerio.load(htmlText);
@@ -169,8 +182,8 @@ export async function saveToDatabase() {
 	//   }
 	// );
 	let vocabLists = [];
-	for (let i = 0; i < Vocab_Urls.length; i++) {
-		const vocabList = await getVocabularyLists(Vocab_Urls[i]);
+	for (let i = 0; i < Vocab_Urls_IELTS.length; i++) {
+		const vocabList = await getVocabularyLists(Vocab_Urls_IELTS[i]);
 		vocabLists.push(vocabList);
 	}
 	VocabListModel.insertMany(vocabLists, (error, docs) => {

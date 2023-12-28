@@ -4,7 +4,7 @@ import { getWordPack, randomWordQuestionPack } from "../helper/game.helper.js";
 import { apiHelper } from "../utils/apiHelper.js";
 
 export const getWordPackCWG = async (req, res) => {
-	let { nQuestion = 50, ...packInfo } = req.query;
+	let { nQuestion = 20, ...packInfo } = req.query;
 
 	nQuestion = parseInt(nQuestion);
 	if (nQuestion > 500) nQuestion = 500;
@@ -33,7 +33,7 @@ export const getWordPackCWG = async (req, res) => {
 
 // ======== WORD MATCH GAME ========
 export const getWordPackWMG = async (req, res) => {
-	let { nQuestion = 50, ...packInfo } = req.query;
+	let { nQuestion = 20, ...packInfo } = req.query;
 	nQuestion = parseInt(nQuestion);
 	if (nQuestion > 500) nQuestion = 500;
 

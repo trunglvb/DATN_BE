@@ -15,7 +15,7 @@ export const getTotalSentencesService = async (topics = []) => {
 
 export const getSentenceListService = async (
 	page = 1,
-	perPage = 20,
+	perPage = 50,
 	topics = []
 ) => {
 	try {
@@ -29,8 +29,7 @@ export const getSentenceListService = async (
 
 		const list = await SentenceModel.find(query)
 			.skip(skip)
-			.limit(perPageInt)
-			.select("-_id -isChecked -topics");
+			.limit(perPageInt);
 
 		return list;
 	} catch (error) {

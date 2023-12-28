@@ -15,7 +15,7 @@ import sentenceRouter from "./routes/sentenceRoute.js";
 import wordRouter from "./routes/wordRoute.js";
 import gameRouter from "./routes/gameRoute.js";
 
-// import { saveToDatabase } from "./utils/crawler.js";
+import { saveToDatabase } from "./utils/crawler.js";
 import { translate } from "@vitalets/google-translate-api";
 
 const app = express();

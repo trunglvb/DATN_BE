@@ -46,7 +46,7 @@ const signup = async (req, res) => {
 		await token.save();
 		await mailer.mailTransport().sendMail(
 			{
-				from: "hoangtiendat.work@gmail.com",
+				from: "levubaotrung0311@gmail.com",
 				to: user.email,
 				subject: "Verify your account",
 				html: mailer.generateEmailTemplate(
@@ -132,7 +132,7 @@ const verifyEmail = async (req, res) => {
 	});
 	await mailer.mailTransport().sendMail(
 		{
-			from: "hoangtiendat.work@gmail.com",
+			from: "levubaotrung0311@gmail.com",
 			to: user.email,
 			subject: "Verify your account",
 			html: mailer.plainEmailTemplate(
@@ -176,7 +176,7 @@ const forgotPassword = async (req, res) => {
 	await resetToken.save();
 	await mailer.mailTransport().sendMail(
 		{
-			from: "hoangtiendat.work@gmail.com",
+			from: "levubaotrung0311@gmail.com",
 			to: user.email,
 			subject: "You have requested to reset your password",
 			html: mailer.generateEmailTemplate(
@@ -248,7 +248,7 @@ const resetPassword = async (req, res) => {
 	});
 	await mailer.mailTransport().sendMail(
 		{
-			from: "hoangtiendat.work@gmail.com",
+			from: "levubaotrung0311@gmail.com",
 			to: user.email,
 			subject: "Reset password successfully",
 			html: mailer.plainEmailTemplate(

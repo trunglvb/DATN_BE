@@ -1,17 +1,18 @@
 import nodemailer from "nodemailer";
 
-const mailTransport = () => nodemailer.createTransport({
-    service: "gmail",
-    host: "smtp.gmail.com",
-    port: 465,
-    auth: {
-        user: process.env.TEST_APP_USER,
-        pass: process.env.TEST_APP_PASS
-    }
-})
+const mailTransport = () =>
+	nodemailer.createTransport({
+		service: "gmail",
+		host: "smtp.gmail.com",
+		port: 465,
+		auth: {
+			user: process.env.TEST_APP_USER,
+			pass: process.env.MARL_LE_PASS,
+		},
+	});
 
 const generateEmailTemplate = (fullName, otp, purpose) => {
-    return `<div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
+	return `<div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
   <div style="margin:50px auto;width:70%;padding:20px 0">
     <div style="border-bottom:1px solid #eee">
       <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Lang App</a>
@@ -25,11 +26,11 @@ const generateEmailTemplate = (fullName, otp, purpose) => {
       <p>Lang App</p>
     </div>
   </div>
-</div>`
-}
+</div>`;
+};
 
 const plainEmailTemplate = (heading, message) => {
-    return `<div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
+	return `<div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
   <div style="margin:50px auto;width:70%;padding:20px 0">
     <div style="border-bottom:1px solid #eee">
       <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">${heading}</a>
@@ -41,11 +42,11 @@ const plainEmailTemplate = (heading, message) => {
       <p>Lang App</p>
     </div>
   </div>
-</div>`
-}
+</div>`;
+};
 
 const generateResetPassEmailTemplate = (url) => {
-    return `!doctype html>
+	return `!doctype html>
 <html lang="en-US">
 
 <head>
@@ -124,12 +125,12 @@ const generateResetPassEmailTemplate = (url) => {
     <!--/100% body table-->
 </body>
 
-</html>`
-}
+</html>`;
+};
 
 export const mailer = {
-    generateEmailTemplate,
-    mailTransport,
-    plainEmailTemplate,
-    generateResetPassEmailTemplate
-}
+	generateEmailTemplate,
+	mailTransport,
+	plainEmailTemplate,
+	generateResetPassEmailTemplate,
+};
