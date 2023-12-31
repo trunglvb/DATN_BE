@@ -21,7 +21,9 @@ export const getWordPackCWG = async (req, res) => {
 	if (packLen < 4) {
 		return res.status(200).json({ wordPack: [] });
 	}
-	const wordPack = randomWordQuestionPack(packages, packLen);
+	const wordPack = randomWordQuestionPack(packages, packLen).filter(
+		(item) => item?.word?.indexOf(" ") === -1
+	);
 
 	if (!wordPack) {
 		return apiHelper.sendError(res, "No data", 404);
@@ -48,6 +50,9 @@ export const getWordPackWMG = async (req, res) => {
 		return apiHelper.sendError(res, "No data", 404);
 	}
 	return apiHelper.sendSuccessResponse(res, "Successfully get data", {
-		wordPack: seedList.sort((_) => Math.random() - 0.5).slice(0, nQuestion),
+		wordPack: seedList
+			?.filter((item) => item?.word?.indexOf(" ") === -1)
+			.sort((_) => Math.random() - 0.5)
+			.slice(0, nQuestion),
 	});
 };
