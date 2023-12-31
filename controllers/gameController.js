@@ -13,7 +13,7 @@ export const getWordPackCWG = async (req, res) => {
 		packInfo,
 		0,
 		1500,
-		"-_id word mean phonetic synonyms"
+		"-_id word mean phonetic synonyms picture"
 	);
 
 	const packLen = packages.length > nQuestion ? nQuestion : packages.length;
@@ -37,7 +37,12 @@ export const getWordPackWMG = async (req, res) => {
 	nQuestion = parseInt(nQuestion);
 	if (nQuestion > 500) nQuestion = 500;
 
-	const seedList = await getWordPack(packInfo, 0, 1500, "-_id word mean");
+	const seedList = await getWordPack(
+		packInfo,
+		0,
+		1500,
+		"-_id word mean picture"
+	);
 
 	if (!seedList) {
 		return apiHelper.sendError(res, "No data", 404);

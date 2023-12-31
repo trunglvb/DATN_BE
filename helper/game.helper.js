@@ -86,11 +86,12 @@ export const randomWordQuestionPack = (list = [], amount = 100) => {
 	const isEnough = confusingList.length > 20;
 
 	for (let i = 0; i < n; ++i) {
-		const { word, mean, phonetic, synonyms } = seedList[i];
+		const { word, mean, phonetic, synonyms, picture } = seedList[i];
 		result.push({
 			word,
 			mean,
 			phonetic,
+			picture,
 			// If size of confusing list too small then use all item of list
 			wrongList: isEnough
 				? generateWrongWordList(word, synonyms, confusingList, true)
