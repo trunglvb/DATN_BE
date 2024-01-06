@@ -20,6 +20,15 @@ const getUser = async (_req, res) => {
 		users,
 	});
 };
+
+const getUserDetails = async (req, res) => {
+	try {
+		const user = await UserModel.findById(req.params.id).populate("books");
+		res.status(200).json(user);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+};
 const signup = async (req, res) => {
 	const { fullName, email, password } = req.body;
 	const existingUser = await UserModel.findOne({ email: email });
@@ -288,4 +297,5 @@ export {
 	getUser,
 	deleteUser,
 	verifyEmail,
+	getUserDetails,
 };

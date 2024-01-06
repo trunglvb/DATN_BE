@@ -20,6 +20,10 @@ const bookSchema = new Schema({
 		type: String,
 		default: "",
 	},
+	userId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "User",
+	},
 });
 
 const BookModel = mongoose.model("book_model", bookSchema);
