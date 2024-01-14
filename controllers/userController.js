@@ -23,7 +23,9 @@ const getUser = async (_req, res) => {
 
 const getUserDetails = async (req, res) => {
 	try {
-		const user = await UserModel.findById(req.params.id).populate("books");
+		const user = await UserModel.findById(req.params.id)
+			.populate("books")
+			.populate("vocabs");
 		res.status(200).json(user);
 	} catch (err) {
 		res.status(500).json(err);

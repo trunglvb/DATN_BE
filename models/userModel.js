@@ -28,6 +28,7 @@ const userSchema = new Schema({
 		required: true,
 	},
 	books: [{ type: mongoose.Schema.Types.ObjectId, ref: "book_model" }],
+	vocabs: [{ type: mongoose.Schema.Types.ObjectId, ref: "vocab_model" }],
 });
 
 userSchema.pre("save", async function (next) {

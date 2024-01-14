@@ -23,6 +23,7 @@ const vocabListSchema = new Schema(
 				},
 			},
 		],
+		vocab: [{ type: mongoose.Schema.Types.ObjectId, ref: "vocab_model" }],
 	},
 	{
 		timestamps: true,
